@@ -1,0 +1,43 @@
+package arquivonovo;
+import com.hp.hpl.jena.ontology.OntClass;
+import com.hp.hpl.jena.ontology.OntModel;
+import com.hp.hpl.jena.ontology.OntModelSpec;
+import com.hp.hpl.jena.rdf.model.ModelFactory;
+import com.hp.hpl.jena.util.FileManager;
+import com.hp.hpl.jena.util.iterator.ExtendedIterator;
+
+
+
+public class ArquivoNovo {
+
+   
+    public static void main(String[] args) {
+        
+        OntModel model = null;
+        model = ModelFactory.createOntologyModel(OntModelSpec.OWL_MEM_MICRO_RULE_INF);
+       java.io.InputStream in = FileManager.get().open( "C:/cadeia_alimentar2.owl" );
+           if (in == null) {
+        throw new IllegalArgumentException("Arquivo de ontologia nao encontrado");
+    }
+       model.read(in, "");
+
+    
+       
+   System.out.println( " Classes e Instancias ");
+   System.out.println( " ===================== ");
+   ExtendedIterator iteratorClasses = model.listClasses ( ) ;
+    while ( iteratorClasses.hasNext() ){
+       OntClass ontClass = ( OntClass ) iteratorClasses.next();
+       System.out.println( ontClass );
+      
+       
+        ExtendedIterator iteratorInstances = ontClass.listInstances( );
+        while ( iteratorClasses.hasNext() ){
+            System.out.println( "\t"+iteratorInstances.next ( ) ); 
+        }
+        System.out.println("");
+   
+    }
+    
+    }
+}
